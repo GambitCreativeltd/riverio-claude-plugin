@@ -1,0 +1,20 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "riverio",
+  "owner": {
+    "name": "Riverio",
+    "url": "https://riverio.ai"
+  },
+  "description": "Riverio's Claude Code plugins for the production crew.",
+  "plugins": [
+    {
+      "name": "riverio",
+      "source": "./plugins/riverio",
+      "description": "Build new ad beats for a Riverio campaign: clone a canvas, run it on Riverio (quoted first), edit in Palmier Pro, QA and upload the finals.",
+      "version": "0.1.0",
+      "author": { "name": "Riverio" },
+      "category": "productivity",
+      "keywords": ["riverio", "ads", "video", "palmier"]
+    }
+  ]
+}

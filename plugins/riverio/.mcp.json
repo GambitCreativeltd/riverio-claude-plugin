@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "riverio": {
+      "type": "http",
+      "url": "https://studio.riverio.ai/api/mcp",
+      "headers": {
+        "Authorization": "Bearer ${RIVERIO_API_KEY}"
+      }
+    },
+    "palmier-pro": {
+      "type": "http",
+      "url": "http://127.0.0.1:19789/mcp"
+    }
+  }
+}

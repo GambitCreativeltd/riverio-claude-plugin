@@ -1,0 +1,11 @@
+{
+  "name": "riverio",
+  "displayName": "Riverio",
+  "version": "0.1.0",
+  "description": "Riverio studio tools (campaigns, canvases, runs, uploads) plus Palmier Pro editing, and the campaign-beats recipe.",
+  "author": { "name": "Riverio", "url": "https://riverio.ai" },
+  "homepage": "https://github.com/GambitCreativeltd/riverio-claude-plugin",
+  "repository": "https://github.com/GambitCreativeltd/riverio-claude-plugin",
+  "license": "MIT",
+  "keywords": ["riverio", "ads", "video", "palmier"]
+}
