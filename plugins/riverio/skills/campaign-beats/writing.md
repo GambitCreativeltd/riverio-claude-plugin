@@ -32,5 +32,11 @@ Headlines of static ad ideas make good hooks for podcast beats.
 (one visual gag) and protect it in the notes. Beat 4 is where the product shows up; beat 5 ends on the CTA.
 Clip 4's lead-in is cut around the brand segment, so its first second and its last line matter most.
 
+## Interview style (street interview)
+One person on camera, an interviewer heard but not seen. `CLIP k` blocks: `INTERVIEWER (off-camera): "..."` then
+`<PERSON> (on-camera): "..." (delivery note)`. Every clip is the same person and place; no phone screens or on-screen
+text in the clips (an app demo, if the source ad has one, is added in the edit). The last clip ends on the brand name
+in full and the hedged invite. Keep the source's number of clips exactly (count its video nodes).
+
 ## Show them together
 Show every beat's story in one message (title + the lines), ask for "yes" or edits, and don't clone before a yes.

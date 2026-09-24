@@ -8,8 +8,8 @@ description: Make new ad beats for a Riverio campaign by copying a finished beat
 The person you're helping is on the production crew, not a developer. Talk plainly: what you're doing, what it costs,
 what you need from them. Don't show code, JSON or tool names unless they ask. One question at a time.
 
-Tools: the **riverio** MCP tools (`get_campaign`, `get_brand_assets`, `clone_beat`, `quote_run`, `run_canvas`,
-`run_status`, `get_outputs`, `prepare_upload`, `upload_final`) and the **palmier-pro** MCP tools (the video editor).
+Tools: the **riverio** MCP tools (`get_campaign`, `get_brand_assets`, `clone_beat`, `set_story`, `quote_run`,
+`run_canvas`, `run_status`, `get_outputs`, `prepare_upload`, `upload_final`) and the **palmier-pro** MCP tools (the video editor).
 Scripts: `${CLAUDE_SKILL_DIR}/scripts/` - run them with `python3.12` (fall back to `python3`). Each prints `--help`.
 
 ## Hard rules
@@ -19,6 +19,9 @@ Scripts: `${CLAUDE_SKILL_DIR}/scripts/` - run them with `python3.12` (fall back 
   Uploaded finals show up in the customer's gallery.
 - **Videos run on Riverio only.** No other video services.
 - **Music:** no song or music without a license. If unsure, leave it out.
+- **Claims:** when you show scripts, list every product claim in them (free, how fast, how many insurers, no calls /
+  no data sold, a specific saving like "$180 down to $100") and ask which ones are confirmed. Agents sometimes add
+  claims back - re-check the clip prompts after every agents run and remove any claim the person dropped.
 - Never touch a canvas someone else is running (`run_status` first), and never edit the SOURCE beat's canvas.
 - If a riverio tool errors with a key/permission problem, tell them to ask Eliad for a key. Don't work around it.
 
@@ -34,11 +37,17 @@ Everything for a campaign lives in `~/Riverio/<campaign-name>/` (short, lowercas
    Save `campaign.json`. Work out the **style** from the source canvas's outputs (`get_outputs` on it):
    - **podcast** - two people talking at a desk; script in `CLIP k OF 5` blocks; b-roll on keywords; end card.
    - **story** - acted/cartoon scene; story in `BEAT 1..5:` blocks; a brand segment inside clip 4; end card.
+   - **interview** - one person on camera + an interviewer heard off-camera; `CLIP k` blocks of question/answer.
+   Match the source canvas's REAL clip count (count its video nodes / its clip prompts from `get_outputs`), not the
+   format described in its notes - the notes can be out of date.
+   If the source is none of these, say so, describe it, and ask how to proceed before writing.
    `get_brand_assets(campaignId)` -> download logo/mascot/b-roll into `brand/`.
 2. **Write the stories.** One per target beat, in exactly the source's Prompt format and length (the source's
    `story` from `get_outputs` is your template). Read [writing.md](writing.md) first. Show ALL of them at once and
    ask for "yes" or edits. Save each as `beats/beatN/story.txt`.
-3. **Clone.** `clone_beat(fromWorkflowId=<source>, toAdIdeaId, story)` per beat (videos stay off).
+3. **Clone.** `clone_beat(fromWorkflowId=<source>, toAdIdeaId, story)` per beat (videos stay off). To change a
+   story on a canvas you already cloned (e.g. after reviewing the agents' output), use `set_story(workflowId, story)`
+   - never clone again, that leaves duplicate canvases in the customer's campaign.
    Then `quote_run` each (returns `agentsTokens`, `videosTokens`, `allTokens`) and ask ONCE with the sums, e.g.
    *"Agents for 3 canvases: 231 tokens. Videos on Riverio after that: 2,100 tokens more. Run the agents now?"*
 4. **Agents only.** `run_canvas(workflowId, mode:"agents", confirmTokens=<agentsTokens>)` per beat; poll
