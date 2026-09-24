@@ -12,6 +12,13 @@ export). The scripts do the full assembly in one go.
   `scripts/brand_segment.py` either cuts it out of the source beat's final (`--cut`) - ONLY if its audio has no
   unlicensed music - or builds it from parts (`--part`) with an optional voice-over/licensed music bed.
   A song you can't prove is licensed = leave it out (a past segment had to be rebuilt for exactly this).
+  If the source's price card has captions or music burned in, redraw it: `scripts/price_card.py --old 180 --new 100
+  --out brand/price_card.mp4` (use the prices the source beat showed; a new saving is a claim - ask).
+  Burned-in captions on other pieces: cut around them, or `ffmpeg -vf "delogo=x=..:y=..:w=..:h=..:enable='between(t,a,b)'"`
+  only while the caption is on screen (it smears anything under it).
+  **Voice-over for the segment:** reuse the campaign's existing segment voice if there is one; the tools here can't
+  generate speech yet - if a new one is needed, tell them and ask Eliad for the voice file.
+- **Interview style:** same as story style (brand segment inside clip 4, neon price, end card) - use `--style story`.
 - **Overlay (story style):** e.g. a neon price PNG shown when the price is first said (`--overlay`, `--overlay-words`).
 
 ## Assemble a beat

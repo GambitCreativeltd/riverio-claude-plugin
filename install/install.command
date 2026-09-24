@@ -64,6 +64,13 @@ for p in "$([ -x "$BREW" ] && "$BREW" --prefix 2>/dev/null)/bin/python3.12" /opt
 done
 [ -z "$PY" ] && [ $DRY = 1 ] && PY=python3
 [ -z "$PY" ] && bye "Python didn't install. Take a screenshot of this window and send it to Eliad."
+# Pillow draws the price card (scripts/price_card.py)
+if [ $DRY = 0 ] && "$PY" -c "import PIL" >/dev/null 2>&1; then
+  ok "Pillow is already installed"
+else
+  info "Installing Pillow (image library)..."
+  run "$PY" -m pip install --user --break-system-packages --quiet pillow || bye "Installing Pillow failed. Take a screenshot and send it to Eliad."
+fi
 
 # 3. Palmier Pro --------------------------------------------------------------------------------
 say "3/6  Palmier Pro (the video editor)"
