@@ -39,18 +39,19 @@ Everything for a campaign lives in `~/Riverio/<campaign-name>/` (short, lowercas
    `story` from `get_outputs` is your template). Read [writing.md](writing.md) first. Show ALL of them at once and
    ask for "yes" or edits. Save each as `beats/beatN/story.txt`.
 3. **Clone.** `clone_beat(fromWorkflowId=<source>, toAdIdeaId, story)` per beat (videos stay off).
-   Then `quote_run` each and ask ONCE, e.g.
-   *"Agents for 3 canvases: 1,240 tokens. Videos on Riverio after that: 9,600 tokens more. Run the agents now?"*
-4. **Agents only.** `run_canvas(workflowId, videos:false, confirmTokens=<agentsOnlyTokens>)` per beat; poll
+   Then `quote_run` each (returns `agentsTokens`, `videosTokens`, `allTokens`) and ask ONCE with the sums, e.g.
+   *"Agents for 3 canvases: 231 tokens. Videos on Riverio after that: 2,100 tokens more. Run the agents now?"*
+4. **Agents only.** `run_canvas(workflowId, mode:"agents", confirmTokens=<agentsTokens>)` per beat; poll
    `run_status` every ~30 s until done (report errors plainly). `get_outputs` -> save `outputs.json`, download
    character images to `cast_A.png`/`cast_B.png` and LOOK at them. Check before any video spend:
    - each character image is ONE clean character sheet: no storyboard panels, no text/subtitles, no collage;
      podcast: person A is the one who sits LEFT in the clip prompts.
    - `dialogue_check.py beats/beatN/story.txt beats/beatN/outputs.json` - every story line is in a clip prompt.
    If something's wrong, say what and offer a re-run of the agents (new quote, new yes). Don't start videos on bad inputs.
-5. **Videos.** Show the exact video quote (`quote_run` -> `withVideoTokens`) and ask. On yes:
-   `run_canvas(videos:true, confirmTokens=<withVideoTokens>)`, poll `run_status`. Then `get_outputs` again: if the
-   clip prompts changed in this run, re-run `dialogue_check.py`. Download the 5 videos in order to `clips/clip1..5.mp4`.
+5. **Videos.** `quote_run` again and show the exact `videosTokens` (sum over beats); ask. On yes:
+   `run_canvas(workflowId, mode:"videos", confirmTokens=<videosTokens>)` - runs ONLY the video nodes on the prompts
+   you already checked (the agents are not re-run). The server refuses a wrong number: if it does, re-quote and ask again.
+   Poll `run_status`, then `get_outputs` for the video URLs. Download the 5 videos in order to `clips/clip1..5.mp4`.
 6. **Edit in Palmier.** Palmier Pro must be open with its MCP server on (`scripts/pal.py --ping`).
    Brand pieces first (end card, story style: brand segment - see [editing.md](editing.md)), then per beat:
    `edit_beat.py beats/beatN --style <podcast|story> --endcard brand/<end card> [...]`.
