@@ -118,7 +118,7 @@ if [ $ASK = 1 ]; then
       case "$KEY" in sk_*) ;; "") warn "Nothing pasted, try again." ;; *) warn "That doesn't start with sk_. Try again."; KEY="" ;; esac
     done
     mkdir -p "$HOME/.claude"
-    [ -f "$SETTINGS" ] && cp -p "$SETTINGS" "$SETTINGS.backup-$(date +%Y%m%d-%H%M%S)"
+    [ -f "$SETTINGS" ] && { BK="$SETTINGS.backup-$(date +%Y%m%d-%H%M%S)"; cp -p "$SETTINGS" "$BK"; chmod 600 "$BK"; }
     RIVERIO_KEY="$KEY" "$PY" - "$SETTINGS" <<'PY' || bye "Couldn't save the key. Your old settings are backed up next to $SETTINGS."
 import json, os, sys
 p = sys.argv[1]
